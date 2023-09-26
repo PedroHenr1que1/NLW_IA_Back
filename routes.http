@@ -1,2 +1,37 @@
-# @name Hello World
-GET http://localhost:3333
+# @name GET prompts
+GET http://localhost:3333/prompts
+
+###
+
+# @name POST video
+POST http://localhost:3333/videos
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="Porsche911Review.mp3"
+Content-Type: audio/mpeg
+
+< ./Porsche911Review.mp3
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+###
+
+# @name CreateTranscription
+POST http://localhost:3333/videos/d7a27dda-f0ac-405f-894b-d98e0b383845/transcription
+Content-Type: application/json
+
+{
+  "prompt" : "Porsche, 911, turboS"
+}
+
+###
+
+# @nome GenerateAiCompletion
+POST http://localhost:3333/ai/generate
+Content-Type: application/json
+
+{
+  "videoId" : "d7a27dda-f0ac-405f-894b-d98e0b383845",
+  "temperature" : 0.5,
+  "template": "Gere um resumo sucinto em português brasileiro da trasncrição do vídeo informada a seguir: '''{transcription}''''"
+}
